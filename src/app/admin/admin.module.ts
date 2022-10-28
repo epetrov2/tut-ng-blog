@@ -7,11 +7,16 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { CreatePageComponent } from './create-page/create-page.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
 import { ReactiveFormsModule } from "@angular/forms";
+import { AuthService } from "./shared/services/auth.service";
+import { HttpClient } from '@angular/common/http';
+import { SharedModule } from "../shared/shared.module";
+
 
 @NgModule({
     imports: [
         CommonModule,
         ReactiveFormsModule,
+        SharedModule,
         RouterModule.forChild([
             { path: '', component: AdminLayoutComponent, children: [
                 { path: '', redirectTo: '/admin/login', pathMatch: 'full'},
@@ -29,8 +34,11 @@ import { ReactiveFormsModule } from "@angular/forms";
       DashboardPageComponent,
       CreatePageComponent,
       EditPageComponent
+    ],
+    providers: [
+        AuthService
     ]
 })
 export class AdminModule {
-
+    constructor(private http: HttpClient) {}
 }

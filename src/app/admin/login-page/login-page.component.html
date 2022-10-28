@@ -20,7 +20,11 @@
         <div class="validation"
         *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
         <small *ngIf="form.get('password')?.hasError('required')">Пароль не введён</small>
-        <small *ngIf="form.get('password')?.hasError('minlength')">Пароль слишком короткий ({{form.get('password')?.errors?.['minlength'].actualLength}}). Должен быть не менее {{form.get('password')?.errors?.['minlength'].requiredLength}}.</small>
+        <small *ngIf="form.get('password')?.hasError('minlength')">
+            Пароль слишком короткий 
+            ({{form.get('password')?.errors?.['minlength'].actualLength}}). 
+            Должен быть не менее 
+            {{form.get('password')?.errors?.['minlength'].requiredLength}}.</small>
         
         </div>
     </div>
