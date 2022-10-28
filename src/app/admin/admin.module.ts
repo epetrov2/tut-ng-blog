@@ -6,10 +6,12 @@ import { AdminLayoutComponent } from './shared/components/admin-layout/admin-lay
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { CreatePageComponent } from './create-page/create-page.component';
 import { EditPageComponent } from './edit-page/edit-page.component';
+import { ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
     imports: [
         CommonModule,
+        ReactiveFormsModule,
         RouterModule.forChild([
             { path: '', component: AdminLayoutComponent, children: [
                 { path: '', redirectTo: '/admin/login', pathMatch: 'full'},
