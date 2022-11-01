@@ -11,8 +11,16 @@ import { tap } from "rxjs/operators";
 export class AuthService {
     constructor(private http: HttpClient){}
 
-    get token(): string {
-        return ''
+    get token(): string | null {
+        const expiresDateString = localStorage.getItem('fb-token-exp');
+        
+        if (!expiresDateString) return null;
+
+        if (new Date() > new Date(expiresDateString)) {
+            this.logout();
+            return null;
+        }
+        return localStorage.getItem('fb-token');
     }
 
     login( user: User): Observable<any> {
@@ -23,15 +31,22 @@ export class AuthService {
             )
     }
     logout() {
-
+        this.setToken(null);
     }
 
     isAuthenticated(): boolean {
         return !!this.token;
     }
 
-    private setToken(response: FbAuthResponse) {
-        console.log(response.idToken);
+    private setToken(response: FbAuthResponse | null) {
+        if (response) {
+            const expiresDate = new Date( new Date().getTime() + (+response.expiresIn * 1000));
+            localStorage.setItem('fb-token', response.idToken);
+            localStorage.setItem('fb-token-exp', expiresDate.toString());
+        }
+        else
+            localStorage.clear();
+        
         
     }
 }
