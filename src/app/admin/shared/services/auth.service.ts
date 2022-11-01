@@ -1,9 +1,9 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaderResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable, ObservableInput, of } from "rxjs";
 import { FbAuthResponse, User } from "src/app/shared/interfaces";
 import { environment } from "src/environments/environment";
-import { tap } from "rxjs/operators";
+import { catchError, tap } from "rxjs/operators";
 
 
 @Injectable()
@@ -27,9 +27,17 @@ export class AuthService {
         return this.http.post(
             `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${environment.apiKey}`, user)
             .pipe(
-                tap(this.setToken as Object)
+                tap(this.setToken as Object),
+                catchError(this.handleError.bind(this))
             )
     }
+
+    private handleError(error: HttpHeaderResponse): ObservableInput<any> {
+        //const {message} = error.
+        
+        return of([])
+    }
+
     logout() {
         this.setToken(null);
     }
