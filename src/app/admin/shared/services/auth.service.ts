@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaderResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, ObservableInput, of } from "rxjs";
+import { Observable, ObservableInput, of, Subject, throwError } from "rxjs";
 import { FbAuthResponse, User } from "src/app/shared/interfaces";
 import { environment } from "src/environments/environment";
 import { catchError, tap } from "rxjs/operators";
@@ -32,10 +32,30 @@ export class AuthService {
             )
     }
 
-    private handleError(error: HttpHeaderResponse): ObservableInput<any> {
-        //const {message} = error.
+    public error$ = new Subject<string>();
+
+    private handleError(error: HttpErrorResponse): ObservableInput<any> {
+        const {message} = error.error.error;
         
-        return of([])
+        switch (message) {
+            case 'INVALID_EMAIL':
+                this.error$.next('Неверный email');
+                break;
+        
+            case 'INVALID_PASSWORD':
+                this.error$.next('Неверный пароль');
+                break;
+            
+            case 'EMAIL_NOT_FOUND':
+                this.error$.next('Не найден email');
+                break;
+                
+            default:
+                break;
+        }
+         
+
+        return throwError(error);
     }
 
     logout() {
