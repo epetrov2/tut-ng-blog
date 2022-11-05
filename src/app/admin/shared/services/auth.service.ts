@@ -59,6 +59,7 @@ export class AuthService {
     }
 
     logout() {
+        console.log('logout');
         this.setToken(null);
     }
 
@@ -73,7 +74,12 @@ export class AuthService {
             localStorage.setItem('fb-token-exp', expiresDate.toString());
         }
         else
+        {
             localStorage.clear();
+            console.log('localStorage.clear');
+            
+        }
+        
         
         
     }

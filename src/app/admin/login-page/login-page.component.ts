@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
 
 import { User } from '../../shared/interfaces';
 import { AuthService } from '../shared/services/auth.service';
@@ -23,15 +23,25 @@ export class LoginPageComponent implements OnInit {
     ])}
   );
 
-  submitted = false;
+  protected submitted = false;
+  protected message?: string;
 
   constructor(
     public auth: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
-    
+    this.route.queryParams.subscribe( (params: Params) => {
+      console.log('queryParams.subscribe');
+      
+      if (params['loginAgain']) {
+        this.message = 'Пожалуйста, введите данные';
+        console.log(this.message);
+        
+      }
+    } );
   }
 
 
@@ -48,14 +58,14 @@ export class LoginPageComponent implements OnInit {
       returnSecureToken: true
     }
 
-    this.auth.login(user).subscribe(() => {
+    this.auth.login(user).subscribe({ next: () => {
       this.form.reset();
       this.router.navigate(['/admin','dashboard'])
       this.submitted = false;
     },
-    () => {
+    error: () => {
       this.submitted = false;
-    }
+    }}
     )
     
   }
