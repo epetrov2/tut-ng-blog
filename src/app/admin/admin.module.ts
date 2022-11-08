@@ -36,8 +36,7 @@ import { AuthGuard } from "./shared/services/auth.guard";
       CreatePageComponent,
       EditPageComponent
     ],
-    providers: [
-        AuthService,
+    providers: [        
         AuthGuard
     ]
 })

@@ -38,9 +38,11 @@ export class LoginPageComponent implements OnInit {
       
       if (params['loginAgain']) {
         this.message = 'Пожалуйста, введите данные';
-        console.log(this.message);
-        
-      }
+      } else if (params['authFailed']) {
+        this.message = 'Пожалуйста, введите данные, снова';
+      }  
+
+      
     } );
   }
 

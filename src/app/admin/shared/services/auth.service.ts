@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
 import { catchError, tap } from "rxjs/operators";
 
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 
 export class AuthService {
     constructor(private http: HttpClient){}
