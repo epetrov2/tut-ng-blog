@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { map, Observable, of } from "rxjs";
+import { map, Observable, of, tap } from "rxjs";
 import { environment } from "src/environments/environment.prod";
 import { FbCreateResponse, Post } from "./interfaces";
 
@@ -22,6 +22,24 @@ export class PostService {
                 } 
             })
         );
+    }
+
+    getAll(): Observable<Post[]> {
+        
+        return this.http.get<Post[]>(`${environment.fbDbUrl}/posts.json`)
+            .pipe(
+                //tap(response => console.log(response)),
+                map((response: {[key: string]: any}) => {
+                    var newPosts: Post[] = Object
+                    .keys(response)
+                    .map( key => ({
+                        ...response[key],
+                        id: key,
+                        date: new Date(response[key].date)
+                    }))
+                    return newPosts;
+                })
+            )
     }
 
 }
