@@ -25,7 +25,6 @@ export class PostService {
     }
 
     getAll(): Observable<Post[]> {
-        
         return this.http.get<Post[]>(`${environment.fbDbUrl}/posts.json`)
             .pipe(
                 //tap(response => console.log(response)),
@@ -40,6 +39,10 @@ export class PostService {
                     return newPosts;
                 })
             )
+    }
+
+    remove(id: string): Observable<void> {
+        return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`)
     }
 
 }
