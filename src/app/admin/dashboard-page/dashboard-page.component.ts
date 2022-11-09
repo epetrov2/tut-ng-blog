@@ -14,7 +14,7 @@ export class DashboardPageComponent implements OnInit, OnDestroy {
 
   protected posts: Post[] = [];
   private pSub?: Subscription;
-
+  protected searchStr: string = '';
 
   ngOnInit(): void {
     this.pSub = this.postsService.getAll().subscribe(posts => {
