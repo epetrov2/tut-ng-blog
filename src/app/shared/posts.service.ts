@@ -27,10 +27,9 @@ export class PostService {
     getAll(): Observable<Post[]> {
         return this.http.get<Post[]>(`${environment.fbDbUrl}/posts.json`)
             .pipe(
-                //tap(response => console.log(response)),
                 map((response: {[key: string]: any}) => {
                     var newPosts: Post[] = Object
-                    .keys(response)
+                    .keys(response) // -NGRSY5xyOLMfLN3ME_v,-NGWRNFmFAJDNar8ICbr (Метод возвращает массив строковых элементов, соответствующих именам перечисляемых свойств)
                     .map( key => ({
                         ...response[key],
                         id: key,
@@ -45,10 +44,9 @@ export class PostService {
         return this.http.get<Post>(`${environment.fbDbUrl}/posts/${id}.json`)
         .pipe(
             map((post: Post) => {
-                
                 return {
                     ...post, 
-                    id,
+                    id, // переопределяем
                     date: new Date(post.date),
                 } 
             })
@@ -57,6 +55,10 @@ export class PostService {
 
     remove(id: string): Observable<void> {
         return this.http.delete<void>(`${environment.fbDbUrl}/posts/${id}.json`)
+    }
+
+    update(post: Post): Observable<Post> {
+        return this.http.patch<Post>(`${environment.fbDbUrl}/posts/${post.id}.json`, post);
     }
 
 }

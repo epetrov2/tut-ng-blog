@@ -20,7 +20,7 @@
         <button
             class="btn btn-primary"
             type="submit"
-            [disabled]="form.invalid"
+            [disabled]="form.invalid || submitted"
         >Опубликовать</button>
     </form>
 </div>
