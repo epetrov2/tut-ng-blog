@@ -11,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 import { SharedModule } from "../shared/shared.module";
 import { AuthGuard } from "./shared/services/auth.guard";
 import { SearchPipe } from "./shared/search.pipe";
+import { AlertComponent } from './shared/components/alert/alert.component';
+import { AlertService } from "./shared/services/alert.service";
 
 
 @NgModule({
@@ -36,10 +38,12 @@ import { SearchPipe } from "./shared/search.pipe";
       DashboardPageComponent,
       CreatePageComponent,
       EditPageComponent,
-      SearchPipe
+      SearchPipe,
+      AlertComponent
     ],
     providers: [        
-        AuthGuard
+        AuthGuard,
+        AlertService
     ]
 })
 export class AdminModule {
