@@ -19,13 +19,13 @@ export class EditPageComponent implements OnInit, OnDestroy {
   updateSub?: Subscription;
 
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private aRoute: ActivatedRoute,
     private postService: PostService,
     private alertService: AlertService
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.pipe(
+    this.aRoute.params.pipe(
       switchMap((params: Params) => {
         return this.postService.getById(params['id'])
       })
