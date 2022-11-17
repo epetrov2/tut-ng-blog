@@ -2,7 +2,6 @@
 
 Udemy - Vladilen Minin - Angular 9 - Blog
 
-## apiKey.ts
+## Add environments\apikey.ts
 
-export const ApiKey: string = '';
-export const FbDbUrl: string = '';
+export const ApiKey: string = '--key--';
