@@ -1,9 +1,8 @@
 import { Environment } from "./interface";
 import { ApiKey } from "./apikey";
-import { FbDbUrl } from "./apikey";
 
 export const environment: Environment = {
     production: false,
     apiKey: ApiKey,
-    fbDbUrl: FbDbUrl
+    fbDbUrl: 'https://ng-blog-dd28a-default-rtdb.europe-west1.firebasedatabase.app/'
 };
